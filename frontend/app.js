@@ -4,7 +4,7 @@
   // ==========================================================
   // CẤU HÌNH: Thay URL bên dưới bằng URL deploy GAS của bạn
   // ==========================================================
-  var API_URL = "https://script.google.com/macros/s/AKfycbwa5JZK86mypsH0J64ofyAC7-M-wj0DewpO1Sum4Lh0n6ezGGsKAtAvwvvTs_o92vE9/exec";
+  var API_URL = "https://script.google.com/macros/s/AKfycbzeqOV5_fZA7WobnkfJIH48vcD1BxCL4kM7yP_fZ3NeLv4f7nit0rSo5_PpCBi7zgoB/exec";
 
   // ---------- API Helper ----------
   function callApi(action, params) {
@@ -13,11 +13,10 @@
     }
     return fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({ action: action, params: params || {} }),
       redirect: "follow"
-    }).then(function(response) {
-      if (!response.ok) throw new Error("Lỗi mạng: " + response.status);
+    })
+    .then(function(response) {
       return response.json();
     });
   }
