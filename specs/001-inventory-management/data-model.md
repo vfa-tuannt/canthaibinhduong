@@ -71,18 +71,19 @@ Records every stock adjustment for audit trail.
 
 ---
 
-### 4. Session (CacheService — not a Sheet)
+### 4. Session (ScriptProperties — not a Sheet)
 
-User session state stored in `CacheService.getUserCache()`.
+User session state stored in `PropertiesService.getScriptProperties()` with key prefix `SESSION_`.
 
 | Key | Type | TTL | Description |
 |-----|------|-----|-------------|
-| `SESSION_TOKEN` | string | 6 hours | Random token generated on successful login |
+| `SESSION_{token}` | JSON string | 7 days | `{username, expiresAt}` — token generated on successful login |
 
 **Notes**:
-- Not persisted in Sheets — ephemeral by design.
-- Validated on every server-side function call.
-- Credentials (username/password) stored in `PropertiesService.getScriptProperties()`.
+- Not persisted in Sheets — stored in ScriptProperties for reliability (unlike CacheService which can evict entries early).
+- Token also stored in client-side `localStorage` for session persistence across page reloads.
+- Validated on every server-side function call by checking existence and expiry timestamp.
+- Credentials (username/password) stored separately in `PropertiesService.getScriptProperties()`.
 
 ## Entity Relationship Diagram
 
@@ -113,7 +114,7 @@ Products (1) ──────< (N) Variants (1) ──────< (N) Adjust
 
 ```
 [Unauthenticated]
-    ── login(user, pass) ──→ [Authenticated] (token in CacheService, 6h TTL)
+    ── login(user, pass) ──→ [Authenticated] (token in ScriptProperties, 7-day TTL + localStorage)
     
 [Authenticated]
     ── logout / TTL expires ──→ [Unauthenticated]

@@ -28,7 +28,7 @@ Build a web-based inventory (tồn kho) management system for weighing-scale pro
 | I | TypeScript-First (NON-NEGOTIABLE) | ✅ PASS | All code in `src/`, strict mode enabled, no `any` planned |
 | II | Single Entry Point | ✅ PASS | `doGet` serves HTML; all GAS-callable functions exported from `src/index.ts` |
 | III | Bundled Deployment (NON-NEGOTIABLE) | ✅ PASS | Standard pipeline: `tsc → webpack → Code.js → clasp push` |
-| IV | GAS Runtime Compliance | ✅ PASS | No async/await; using SpreadsheetApp, HtmlService, CacheService, PropertiesService only |
+| IV | GAS Runtime Compliance | ✅ PASS | No async/await; using SpreadsheetApp, HtmlService, PropertiesService only |
 | V | Observability | ✅ PASS | `console.log`/`console.error` on all CRUD, auth, and adjustment paths; Stackdriver enabled |
 | VI | Credential & Secret Safety | ⚠️ ATTENTION | Username/password stored in `PropertiesService.getScriptProperties()`, NOT in source code |
 | VII | Simplicity (YAGNI) | ✅ PASS | Flat module structure; no unnecessary abstractions; inline where possible |

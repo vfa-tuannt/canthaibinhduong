@@ -1,7 +1,7 @@
 /**
  * Authentication module.
  * Credentials are stored in ScriptProperties (AUTH_USERNAME, AUTH_PASSWORD).
- * Sessions are stored in CacheService with 6-hour TTL.
+ * Sessions are stored in ScriptProperties with 7-day TTL.
  */
 
 interface LoginResult {
@@ -10,7 +10,13 @@ interface LoginResult {
   error?: string;
 }
 
-const SESSION_TTL = 21600; // 6 hours in seconds
+interface SessionData {
+  username: string;
+  expiresAt: number;
+}
+
+const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+const SESSION_PREFIX = "SESSION_";
 
 function login(username: string, password: string): LoginResult {
   const props = PropertiesService.getScriptProperties();
@@ -28,22 +34,36 @@ function login(username: string, password: string): LoginResult {
   }
 
   const token = Utilities.getUuid();
-  CacheService.getUserCache()!.put(token, username, SESSION_TTL);
-  console.log(`login: success for username="${username}", token generated`);
+  const sessionData: SessionData = {
+    username,
+    expiresAt: Date.now() + SESSION_TTL_MS,
+  };
+  props.setProperty(SESSION_PREFIX + token, JSON.stringify(sessionData));
+  console.log(`login: success for username="${username}", token generated, expires in 7 days`);
   return { success: true, token };
 }
 
 function validateSession(token: string): boolean {
   if (!token) return false;
-  const cached = CacheService.getUserCache()!.get(token);
-  const valid = cached !== null;
-  console.log(`validateSession: token=${token.substring(0, 8)}… valid=${valid}`);
-  return valid;
+  const props = PropertiesService.getScriptProperties();
+  const raw = props.getProperty(SESSION_PREFIX + token);
+  if (!raw) {
+    console.log(`validateSession: token=${token.substring(0, 8)}… valid=false (not found)`);
+    return false;
+  }
+  const session: SessionData = JSON.parse(raw);
+  if (Date.now() > session.expiresAt) {
+    props.deleteProperty(SESSION_PREFIX + token);
+    console.log(`validateSession: token=${token.substring(0, 8)}… valid=false (expired)`);
+    return false;
+  }
+  console.log(`validateSession: token=${token.substring(0, 8)}… valid=true`);
+  return true;
 }
 
 function logout(token: string): void {
   if (!token) return;
-  CacheService.getUserCache()!.remove(token);
+  PropertiesService.getScriptProperties().deleteProperty(SESSION_PREFIX + token);
   console.log(`logout: token=${token.substring(0, 8)}… removed`);
 }
 

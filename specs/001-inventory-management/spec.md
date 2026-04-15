@@ -19,7 +19,7 @@ Người dùng cần đăng nhập vào hệ thống để sử dụng các tín
 
 1. **Given** người dùng chưa đăng nhập, **When** nhập username "tienha" và password "hatien", **Then** hệ thống cho phép truy cập vào trang chính.
 2. **Given** người dùng chưa đăng nhập, **When** nhập thông tin đăng nhập sai, **Then** hệ thống hiển thị thông báo lỗi và không cho phép truy cập.
-3. **Given** người dùng đang sử dụng hệ thống, **When** đóng trình duyệt và mở lại, **Then** người dùng phải đăng nhập lại.
+3. **Given** người dùng đang sử dụng hệ thống, **When** đóng trình duyệt và mở lại trong vòng 7 ngày, **Then** người dùng được tự động đăng nhập lại mà không cần nhập lại thông tin.
 
 ---
 
@@ -118,7 +118,7 @@ Người dùng cần một dashboard để so sánh tồn kho giữa các tháng
 - **Product (Sản phẩm)**: Đại diện cho một loại sản phẩm. Thuộc tính: ID, tên sản phẩm, ngày tạo.
 - **Variant (Mẫu mã)**: Đại diện cho một biến thể cụ thể của sản phẩm. Thuộc tính: ID, Product ID (liên kết), mã sản phẩm, số lượng tồn hiện tại.
 - **Inventory Adjustment (Điều chỉnh tồn kho)**: Ghi lại mỗi lần thay đổi số lượng. Thuộc tính: ID, Variant ID (liên kết), thời gian, loại (nhập/xuất), số lượng thay đổi, số lượng trước, số lượng sau, ghi chú.
-- **User Session**: Trạng thái đăng nhập của người dùng (lưu trong PropertiesService hoặc cache).
+- **User Session**: Trạng thái đăng nhập của người dùng (lưu trong ScriptProperties với TTL 7 ngày, token được lưu client-side trong localStorage).
 
 ## Success Criteria *(mandatory)*
 
@@ -139,7 +139,9 @@ Người dùng cần một dashboard để so sánh tồn kho giữa các tháng
 - **Data volume**: Dự kiến dưới 500 sản phẩm và 2000 mẫu mã. Phù hợp với giới hạn Google Sheets và GAS.
 - **Browser support**: Người dùng sử dụng trình duyệt hiện đại (Chrome, Firefox, Edge, Safari phiên bản mới).
 - **Network**: Người dùng có kết nối internet ổn định để truy cập Google Apps Script.
-- **Authentication**: Sử dụng xác thực đơn giản (username/password so sánh trực tiếp). Không cần OAuth2 hay SSO cho phiên bản này.
+- **Authentication**: Sử dụng xác thực đơn giản (username/password so sánh trực tiếp). Session token lưu trong ScriptProperties với TTL 7 ngày.
+- **Spreadsheet access**: Sử dụng `SpreadsheetApp.openById()` với SPREADSHEET_ID từ ScriptProperties (standalone script, không dùng `getActiveSpreadsheet()`).
+- **Web app access**: Cấu hình `ANYONE_ANONYMOUS` để cho phép truy cập từ tài khoản cá nhân.
 - **Data migration**: Dữ liệu từ file Excel/CSV hiện tại sẽ được import thủ công vào Google Sheets ban đầu (không nằm trong scope tự động).
 - **Mobile support**: Giao diện responsive tối thiểu, ưu tiên desktop.
 - **Concurrent access**: Chỉ một người dùng nên không cần xử lý conflict phức tạp.

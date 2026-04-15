@@ -26,7 +26,7 @@
 
 - [X] T001 Remove template example code from `src/example.ts` and clean up `src/index.ts` to remove `helloWorld` export
 - [X] T002 Configure Webpack `copy-webpack-plugin` or adjust build pipeline to include `src/html/*.html` files alongside `Code.js` for clasp push in `webpack.config.js`
-- [X] T003 [P] Verify `appsscript.json` has correct `webapp` configuration (`access: "ANYONE"`, `executeAs: "USER_DEPLOYING"`) and `oauthScopes` include Spreadsheet and Cache access
+- [X] T003 [P] Verify `appsscript.json` has correct `webapp` configuration (`access: "ANYONE_ANONYMOUS"`, `executeAs: "USER_DEPLOYING"`) and `oauthScopes` include Spreadsheet access
 
 ---
 
@@ -53,13 +53,13 @@
 
 ### Implementation for User Story 1
 
-- [X] T008 [US1] Implement `login(username, password)` function that validates against `ScriptProperties` (AUTH_USERNAME, AUTH_PASSWORD), generates session token via `Utilities.getUuid()`, stores in `CacheService.getUserCache()` with 6h TTL, and returns `LoginResult` in `src/auth.ts`
-- [X] T009 [US1] Implement `validateSession(token)` function that checks `CacheService.getUserCache()` for valid token in `src/auth.ts`
-- [X] T010 [US1] Implement `logout(token)` function that removes token from `CacheService.getUserCache()` in `src/auth.ts`
+- [X] T008 [US1] Implement `login(username, password)` function that validates against `ScriptProperties` (AUTH_USERNAME, AUTH_PASSWORD), generates session token via `Utilities.getUuid()`, stores in `PropertiesService.getScriptProperties()` with 7-day TTL (JSON with expiresAt timestamp), and returns `LoginResult` in `src/auth.ts`
+- [X] T009 [US1] Implement `validateSession(token)` function that checks `PropertiesService.getScriptProperties()` for valid token and verifies expiry timestamp in `src/auth.ts`
+- [X] T010 [US1] Implement `logout(token)` function that removes token from `PropertiesService.getScriptProperties()` in `src/auth.ts`
 - [X] T011 [US1] Implement `doGet()` function that serves the HTML app via `HtmlService.createTemplateFromFile('html/index').evaluate().setTitle('Quản lý tồn kho').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)` in `src/index.ts`
 - [X] T012 [US1] Export `login`, `validateSession`, `logout` from `src/index.ts`
 - [X] T013 [US1] Implement login form UI (username/password fields, submit button, error message area) and wire to `google.script.run.login()` with success/failure handlers; on success store token in JS variable and switch to products view in `src/html/js.html`
-- [X] T014 [US1] Add session validation on app load — call `google.script.run.validateSession()` to check if a stored token is still valid; if not, show login view in `src/html/js.html`
+- [X] T014 [US1] Add session validation on app load — check `localStorage` for saved token, call `google.script.run.validateSession()` to verify; if valid auto-login, if not show login view in `src/html/js.html`
 - [X] T015 [US1] Add `console.log` for login attempts (success/failure) and session validation calls in `src/auth.ts`
 
 **Checkpoint**: User can open the web app, log in with tienha/hatien, see the main view, and be denied with wrong credentials

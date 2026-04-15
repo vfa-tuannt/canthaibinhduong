@@ -20,7 +20,7 @@
 
 ## R2: Google Sheets as Database — Schema Design
 
-**Decision**: One sheet per logical table with row 1 as headers. Use `SpreadsheetApp.getActiveSpreadsheet().getSheetByName()` for table access.
+**Decision**: One sheet per logical table with row 1 as headers. Use `SpreadsheetApp.openById(SPREADSHEET_ID)` for table access (standalone script reading ID from ScriptProperties).
 
 **Rationale**:
 - Google Sheets natively supports tabular data with named sheets.
@@ -39,12 +39,13 @@
 
 ## R3: Authentication in GAS Web App
 
-**Decision**: Simple username/password check against `ScriptProperties`, with session token stored in `CacheService.getUserCache()`.
+**Decision**: Simple username/password check against `ScriptProperties`, with session token stored in `PropertiesService.getScriptProperties()` with 7-day TTL.
 
 **Rationale**:
 - Only 1 user (tienha). Full OAuth/SSO is overkill per YAGNI principle.
 - `PropertiesService.getScriptProperties()` stores credentials server-side, never exposed to client.
-- `CacheService.getUserCache()` provides per-user temporary storage (up to 6 hours TTL) — suitable for session tokens.
+- `PropertiesService.getScriptProperties()` stores session tokens server-side with JSON-encoded expiry timestamps — supports TTL up to any duration (7 days configured).
+- Client-side `localStorage` persists the token across page reloads, enabling seamless session restoration.
 - On each server call, validate the session token before processing.
 
 **Alternatives considered**:
@@ -53,7 +54,8 @@
 - Cookie-based sessions — rejected; GAS HTML Service runs in a sandboxed iframe, cookies are unreliable.
 
 **Security notes**:
-- Session token = random string generated server-side, stored in `CacheService` with 6-hour expiry.
+- Session token = UUID generated server-side, stored in `ScriptProperties` with 7-day expiry timestamp.
+- Client stores token in `localStorage` for session persistence across page reloads.
 - Password comparison uses constant-time approach to prevent timing attacks (though threat model is minimal for 1 user).
 - Per constitution Principle VI, credentials stored in `ScriptProperties` — set once via `PropertiesService.getScriptProperties().setProperty()` during initial deployment.
 
@@ -103,7 +105,7 @@
 |-------|----------|---------------|
 | UI Architecture | SPA-like single HTML with view switching | GAS has no URL routing |
 | Database | Google Sheets (1 sheet = 1 table) | Batch reads, minimize API calls |
-| Auth | ScriptProperties + CacheService session | Single user, 6-hour session TTL |
+| Auth | ScriptProperties + PropertiesService session | Single user, 7-day session TTL |
 | Concurrency | LockService for stock adjustments | Prevent multi-tab race conditions |
 | Dashboard | On-the-fly aggregation from history | <3s for ~2000 variants |
 | Frontend | Vanilla HTML/CSS/JS | GAS iframe sandbox, keep simple |

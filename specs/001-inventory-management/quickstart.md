@@ -58,7 +58,7 @@ npm run deploy
 
 1. Open the GAS project in the Script Editor.
 2. Click **Deploy** → **Test deployments** (or **New deployment** → **Web app**).
-3. Set access to "Anyone" or "Anyone with Google account" as needed.
+3. Set access to "Anyone" (ANYONE_ANONYMOUS for personal accounts).
 4. Open the deployed URL in a browser.
 5. Login with username `tienha` and password `hatien`.
 
