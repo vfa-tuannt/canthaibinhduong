@@ -1,15 +1,26 @@
-// You can access any of the global GAS objects in this file. You can also
-// import local files or external dependencies:
-export { helloWorld } from "./example";
-
-// Simple Triggers: These five export functions are reserved export function names that are
-// called by Google Apps when the corresponding event occurs. You can safely
-// delete them if you won't be using them, but don't use the same export function names
-// for anything else.
+// Entry point: All GAS-callable functions must be exported from this file.
 // See: https://developers.google.com/apps-script/guides/triggers
 
-// NOTE: only `export {...}` syntax will work. You cannot define and export a trigger in
-// the same line.
+import { login, validateSession, logout } from "./auth";
+import { getProducts, searchProducts, createProduct, createVariant } from "./products";
+import { adjustStock, getAdjustmentHistory } from "./inventory";
+import { getDashboardData } from "./dashboard";
+
+// --- Web App entry point ---
+
+function doGet(): GoogleAppsScript.HTML.HtmlOutput {
+  return HtmlService.createTemplateFromFile("src/html/index")
+    .evaluate()
+    .setTitle("Quản lý tồn kho")
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+// Helper for HTML includes (used in index.html templates)
+function include(filename: string): string {
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+}
+
+// --- Simple Triggers ---
 
 function onOpen(
   e:
@@ -21,20 +32,18 @@ function onOpen(
   console.log(e);
 }
 
-function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit): void {
-  console.log(e);
-}
-
-function onInstall(e: GoogleAppsScript.Events.AddonOnInstall): void {
-  console.log(e);
-}
-
-function doGet(e: GoogleAppsScript.Events.DoGet): void {
-  console.log(e);
-}
-
-function doPost(e: GoogleAppsScript.Events.DoPost): void {
-  console.log(e);
-}
-
-export { onOpen, onEdit, onInstall, doGet, doPost };
+export {
+  doGet,
+  include,
+  onOpen,
+  login,
+  validateSession,
+  logout,
+  getProducts,
+  searchProducts,
+  createProduct,
+  createVariant,
+  adjustStock,
+  getAdjustmentHistory,
+  getDashboardData,
+};
