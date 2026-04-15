@@ -4,7 +4,7 @@
   // ==========================================================
   // CẤU HÌNH: Thay URL bên dưới bằng URL deploy GAS của bạn
   // ==========================================================
-  var API_URL = "PASTE_YOUR_GAS_DEPLOYMENT_URL_HERE";
+  var API_URL = "https://script.google.com/macros/s/AKfycbwa5JZK86mypsH0J64ofyAC7-M-wj0DewpO1Sum4Lh0n6ezGGsKAtAvwvvTs_o92vE9/exec";
 
   // ---------- API Helper ----------
   function callApi(action, params) {
