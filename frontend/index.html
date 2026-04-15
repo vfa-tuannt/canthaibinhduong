@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quản lý tồn kho</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Login View -->
+    <div id="view-login" class="view">
+      <div class="login-container">
+        <h1>Quản lý tồn kho</h1>
+        <form id="login-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="username">Tên đăng nhập</label>
+            <input type="text" id="username" autocomplete="username" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" autocomplete="current-password" required />
+          </div>
+          <div id="login-error" class="error-msg" style="display:none;"></div>
+          <button type="submit" id="login-btn" class="btn btn-primary">Đăng nhập</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main App Shell (hidden until login) -->
+    <div id="app-shell" style="display:none;">
+      <!-- Navigation -->
+      <nav id="main-nav" class="navbar">
+        <span class="nav-brand">Quản lý tồn kho</span>
+        <div class="nav-links">
+          <a href="#" class="nav-link active" data-view="products">Sản phẩm</a>
+          <a href="#" class="nav-link" data-view="dashboard">Dashboard</a>
+          <a href="#" class="nav-link nav-logout" id="logout-btn">Đăng xuất</a>
+        </div>
+      </nav>
+
+      <!-- Products View -->
+      <div id="view-products" class="view active">
+        <div class="view-header">
+          <h2>Danh sách sản phẩm</h2>
+          <div class="view-actions">
+            <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm..." class="search-input" />
+            <button class="btn btn-primary" id="btn-add-product">+ Sản phẩm</button>
+          </div>
+        </div>
+        <div id="products-loading" class="loading" style="display:none;">
+          <div class="spinner"></div>
+          <span>Đang tải...</span>
+        </div>
+        <div id="products-list"></div>
+      </div>
+
+      <!-- History View -->
+      <div id="view-history" class="view">
+        <div class="view-header">
+          <h2 id="history-title">Lịch sử điều chỉnh</h2>
+          <div class="view-actions">
+            <label>Từ: <input type="date" id="history-from" /></label>
+            <label>Đến: <input type="date" id="history-to" /></label>
+            <button class="btn btn-secondary" id="btn-back-products">← Quay lại</button>
+          </div>
+        </div>
+        <div id="history-loading" class="loading" style="display:none;">
+          <div class="spinner"></div>
+          <span>Đang tải...</span>
+        </div>
+        <div id="history-list"></div>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="view-dashboard" class="view">
+        <div class="view-header">
+          <h2>Dashboard</h2>
+          <div class="view-actions">
+            <label>Năm:
+              <select id="dashboard-year"></select>
+            </label>
+            <label>Sản phẩm:
+              <select id="dashboard-product-filter">
+                <option value="">Tất cả</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="dashboard-loading" class="loading" style="display:none;">
+          <div class="spinner"></div>
+          <span>Đang tải...</span>
+        </div>
+        <div id="dashboard-content"></div>
+      </div>
+
+      <!-- Modals -->
+      <div id="modal-overlay" class="modal-overlay" style="display:none;">
+        <div class="modal" id="modal-container">
+          <div class="modal-header">
+            <h3 id="modal-title"></h3>
+            <button class="modal-close" id="modal-close">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
