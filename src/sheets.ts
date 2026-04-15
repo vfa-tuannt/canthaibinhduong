@@ -1,6 +1,8 @@
 /**
  * Google Sheets data-access helpers.
  * Each "table" is a named sheet in the active spreadsheet with row 1 as headers.
+ * 
+ * IMPORTANT: For standalone scripts, set SPREADSHEET_ID in ScriptProperties.
  */
 
 const SHEET_NAMES = {
@@ -28,11 +30,24 @@ const HEADERS: Record<SheetName, string[]> = {
 };
 
 /**
+ * Get the spreadsheet by ID from ScriptProperties.
+ * Throws an error if SPREADSHEET_ID is not configured.
+ */
+function getSpreadsheet(): GoogleAppsScript.Spreadsheet.Spreadsheet {
+  const props = PropertiesService.getScriptProperties();
+  const spreadsheetId = props.getProperty("SPREADSHEET_ID");
+  if (!spreadsheetId) {
+    throw new Error("SPREADSHEET_ID chưa được cấu hình trong ScriptProperties.");
+  }
+  return SpreadsheetApp.openById(spreadsheetId);
+}
+
+/**
  * Return the sheet with the given name, creating it (with headers) if it does
  * not yet exist.
  */
 function getOrCreateSheet(name: SheetName): GoogleAppsScript.Spreadsheet.Sheet {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet();
   let sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);

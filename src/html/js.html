@@ -85,6 +85,7 @@
         $("login-btn").disabled = false;
         if (result.success) {
           sessionToken = result.token;
+          try { localStorage.setItem("sessionToken", sessionToken); } catch(e) {}
           $("view-login").style.display = "none";
           $("app-shell").style.display = "block";
           showView("view-products");
@@ -106,6 +107,7 @@
       google.script.run.logout(sessionToken);
     }
     sessionToken = null;
+    try { localStorage.removeItem("sessionToken"); } catch(e) {}
     $("app-shell").style.display = "none";
     $("view-login").style.display = "flex";
     $("username").value = "";
@@ -395,8 +397,31 @@
   }
 
   // ---------- Init ----------
-  // Show login view on load
-  $("view-login").style.display = "flex";
+  // Restore session from localStorage if available
+  var savedToken = null;
+  try { savedToken = localStorage.getItem("sessionToken"); } catch(e) {}
+  if (savedToken) {
+    google.script.run
+      .withSuccessHandler(function(valid) {
+        if (valid) {
+          sessionToken = savedToken;
+          $("view-login").style.display = "none";
+          $("app-shell").style.display = "block";
+          showView("view-products");
+          loadProducts();
+        } else {
+          try { localStorage.removeItem("sessionToken"); } catch(e) {}
+          $("view-login").style.display = "flex";
+        }
+      })
+      .withFailureHandler(function() {
+        try { localStorage.removeItem("sessionToken"); } catch(e) {}
+        $("view-login").style.display = "flex";
+      })
+      .validateSession(savedToken);
+  } else {
+    $("view-login").style.display = "flex";
+  }
 
 })();
 </script>
