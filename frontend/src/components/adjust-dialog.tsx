@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
+import { Check } from "lucide-react"
 import { toast } from "sonner"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { adjustStock } from "@/lib/api"
 import type { Variant } from "@/lib/api"
 
@@ -65,15 +65,31 @@ export function AdjustDialog({ variant, token, onClose, onSuccess }: AdjustDialo
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Label>Loại</Label>
-            <Select value={type} onValueChange={(val) => { if (val) setType(val) }}>
-              <SelectTrigger className="min-h-[44px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="IMPORT">Nhập kho</SelectItem>
-                <SelectItem value="EXPORT">Xuất kho</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-2 gap-2">
+              {(["IMPORT", "EXPORT"] as const).map((option) => {
+                const selected = type === option
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setType(option)}
+                    className={[
+                      "relative min-h-[56px] rounded-md border-2 px-4 text-base font-medium transition-colors",
+                      selected
+                        ? "border-pink-400 bg-pink-50 text-pink-700"
+                        : "border-input bg-background text-foreground hover:bg-muted",
+                    ].join(" ")}
+                  >
+                    {option === "IMPORT" ? "Nhập kho" : "Xuất kho"}
+                    {selected && (
+                      <span className="absolute bottom-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-pink-400">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <Label>Số lượng</Label>

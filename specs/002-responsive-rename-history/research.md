@@ -69,7 +69,7 @@
 **Decision**: Use Tailwind CSS responsive utilities (mobile-first by default) with ShadCN's built-in responsive patterns:
 
 - **Navbar**: Desktop = horizontal nav links. Mobile/Tablet = hamburger icon opening `Sheet` component (slide-in drawer).
-- **Tables**: Wrap in `div.overflow-x-auto` on mobile. On small screens, use ShadCN `Table` with horizontally scrollable container.
+- **Tables**: On desktop (≥1025px), use ShadCN `Table` with all columns. On mobile/tablet (<1025px), switch to card-based layout so stock and action buttons are immediately visible without horizontal scrolling. History tables still use `div.overflow-x-auto` since they are read-only.
 - **Modals/Dialogs**: ShadCN `Dialog` is responsive by default (`max-w-[95vw]` on mobile). Add `DialogContent` with `sm:max-w-[425px]`.
 - **Forms**: Stack vertically on mobile (default), side-by-side inputs on tablet+ using Tailwind `sm:flex`.
 - **Breakpoints**: Use Tailwind defaults which align with Constitution §VIII:

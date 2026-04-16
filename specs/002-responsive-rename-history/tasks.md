@@ -46,8 +46,8 @@
 - [x] T009 Create responsive navbar component in `frontend/src/components/navbar.tsx` — desktop: horizontal nav links (Sản phẩm, Lịch sử, Dashboard, Đăng xuất); mobile: hamburger icon opening ShadCN `Sheet` drawer with nav items; all touch targets ≥44×44px
 - [x] T010 Create login page in `frontend/src/pages/login.tsx` — ShadCN `Card` + `Input` + `Button` + `Label`, calls `login()` API, stores token via `use-auth` hook, responsive layout (centered card, max-width on mobile)
 - [x] T011 Create products page shell in `frontend/src/pages/products.tsx` — loads product list via `getProducts` API, renders `product-table` component, includes search input and "Thêm sản phẩm" button
-- [x] T012 Create product table component in `frontend/src/components/product-table.tsx` — ShadCN `Table` displaying products with variants, action buttons (Điều chỉnh, Lịch sử, + Mẫu mã), responsive: `overflow-x-auto` wrapper on mobile, touch-friendly button sizing
-- [x] T013 Create stock adjustment dialog in `frontend/src/components/adjust-dialog.tsx` — ShadCN `Dialog` with `Select` (Nhập/Xuất), `Input` (quantity), `Textarea` (note), calls `adjustStock` API, shows success/error via `Sonner` toast
+- [x] T012 Create product table component in `frontend/src/components/product-table.tsx` — Desktop (≥1025px): ShadCN `Table` with all columns; Mobile/Tablet (<1025px): card-based layout showing variant name, stock, and action buttons without horizontal scroll. All touch targets ≥44px
+- [x] T013 Create stock adjustment dialog in `frontend/src/components/adjust-dialog.tsx` — ShadCN `Dialog` with two toggle buttons ("Nhập kho" / "Xuất kho") instead of Select dropdown, `Input` (quantity), `Textarea` (note), calls `adjustStock` API, shows success/error via `Sonner` toast
 - [x] T014 Create add variant dialog in `frontend/src/components/variant-dialog.tsx` — ShadCN `Dialog` with `Input` fields (name, code, initial stock), calls `createVariant` API
 - [x] T015 Create add product dialog using ShadCN `Dialog` in `frontend/src/pages/products.tsx` — `Input` for product name, calls `createProduct` API
 - [x] T016 Create dashboard page in `frontend/src/pages/dashboard.tsx` — port existing dashboard rendering from vanilla JS to React with ShadCN `Table` + `Select` (year, product filter), responsive layout
@@ -67,7 +67,7 @@
 
 - [x] T018 [US1] Audit and fix login page for mobile in `frontend/src/pages/login.tsx` — ensure card fits within viewport, inputs are full-width, button is ≥44px height, no horizontal overflow
 - [x] T019 [US1] Audit and fix navbar for mobile in `frontend/src/components/navbar.tsx` — verify hamburger menu triggers Sheet drawer, nav items are stacked vertically with ≥44px tap targets, drawer closes on navigation
-- [x] T020 [US1] Audit and fix product table for mobile in `frontend/src/components/product-table.tsx` — verify `overflow-x-auto` container wraps table, action buttons stack vertically or use icon-only compact layout on mobile, touch targets ≥44px
+- [x] T020 [US1] Audit and fix product table for mobile in `frontend/src/components/product-table.tsx` — mobile/tablet uses card-based layout (no horizontal scroll), desktop uses traditional table. All action buttons visible without scrolling, touch targets ≥44px
 - [x] T021 [US1] Audit and fix all dialogs for mobile (adjust-dialog, variant-dialog, product add dialog) — verify `DialogContent` uses `max-w-[95vw]` on mobile, form fields are full-width, submit buttons are ≥44px
 - [x] T022 [US1] Audit and fix dashboard page for mobile in `frontend/src/pages/dashboard.tsx` — verify tables have `overflow-x-auto`, filter controls stack vertically, select dropdowns are full-width
 - [x] T023 [US1] Verify responsive layout at mobile (≤480px) — Constitution §VIII: no horizontal page scroll, all touch targets ≥44×44px, viewport meta tag present in `frontend/index.html`
@@ -85,7 +85,7 @@
 ### Implementation for User Story 2
 
 - [x] T024 [US2] Optimize navbar for tablet in `frontend/src/components/navbar.tsx` — show full horizontal nav links at `md:` breakpoint (≥768px) instead of hamburger menu
-- [x] T025 [US2] Optimize product table for tablet in `frontend/src/components/product-table.tsx` — show all columns (name, variant, code, stock, actions) without horizontal scroll at `md:` breakpoint, action buttons in horizontal row
+- [x] T025 [US2] Optimize product table for tablet in `frontend/src/components/product-table.tsx` — tablet uses card-based layout (same as mobile, no horizontal scroll needed), desktop shows full table with all columns at `md:` breakpoint
 - [x] T026 [US2] Optimize dialogs for tablet — `DialogContent` at `sm:max-w-[425px]` width, form inputs on wider layout where appropriate
 - [x] T027 [US2] Optimize dashboard tables for tablet in `frontend/src/pages/dashboard.tsx` — tables show all columns without scroll, filter controls in horizontal row at `md:` breakpoint
 - [x] T028 [US2] Verify responsive layout at tablet (768px) and desktop (1280px) — Constitution §VIII: tables show all main columns, nav is horizontal, optimal spacing

@@ -86,9 +86,9 @@ frontend/                     # React SPA (Vite + ShadCN UI) → GitHub Pages
 │   │   ├── ui/               # ShadCN UI components (auto-generated via CLI)
 │   │   ├── navbar.tsx         # Responsive navbar (Sheet drawer on mobile)
 │   │   ├── login-form.tsx
-│   │   ├── product-table.tsx  # Product list with rename action
+│   │   ├── product-table.tsx  # Product list: card layout on mobile/tablet, table on desktop
 │   │   ├── rename-dialog.tsx  # Rename product modal
-│   │   ├── adjust-dialog.tsx  # Stock adjustment modal
+│   │   ├── adjust-dialog.tsx  # Stock adjustment modal (toggle buttons: Nhập kho/Xuất kho)
 │   │   ├── variant-dialog.tsx # Add variant modal
 │   │   └── history-table.tsx  # Global history with filters
 │   └── pages/
