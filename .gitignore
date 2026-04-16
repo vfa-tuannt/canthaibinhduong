@@ -6,3 +6,6 @@ Code.js
 Thumbs.db
 .env*
 .clasprc.json
+.vscode
+google-sheet-mcp-credentials.json
+docs

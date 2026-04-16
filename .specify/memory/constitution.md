@@ -1,34 +1,27 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: [TEMPLATE/UNVERSIONED] → 1.0.0
-Bump type: MINOR — initial constitution, repository-specific governance defined for the first time.
+Version change: 1.0.0 → 1.1.0
+Bump type: MINOR — new principle added (VIII. Responsive UI / Mobile-First).
 
-Modified principles (template → concrete):
-  [PRINCIPLE_1_NAME] → I. TypeScript-First (NON-NEGOTIABLE)
-  [PRINCIPLE_2_NAME] → II. Single Entry Point
-  [PRINCIPLE_3_NAME] → III. Bundled Deployment (NON-NEGOTIABLE)
-  [PRINCIPLE_4_NAME] → IV. GAS Runtime Compliance
-  [PRINCIPLE_5_NAME] → V. Observability
+Modified principles:
+  None
 
-Added principles beyond template default (5 → 7):
-  + VI. Credential & Secret Safety
-  + VII. Simplicity (YAGNI)
+Added principles:
+  + VIII. Responsive UI (Mobile-First)
 
 Added sections:
-  + Technology Stack & Constraints
-  + Development Workflow
+  None
 
 Removed sections:
   None
 
 Templates requiring updates:
   ✅ .specify/memory/constitution.md — this file (overwritten)
-  ✅ .specify/templates/plan-template.md — Constitution Check placeholder reads from
-     this constitution at plan-time; no structural change needed
-  ✅ .specify/templates/spec-template.md — generic enough; no GAS-specific changes needed
-  ✅ .specify/templates/tasks-template.md — path convention (src/ root) already matches
-     project structure; no update needed
+  ✅ .specify/templates/plan-template.md — Constitution Check: verify UI tasks include
+     responsive/mobile-first validation step
+  ✅ .specify/templates/spec-template.md — UI features MUST declare breakpoint support
+  ✅ .specify/templates/tasks-template.md — UI tasks MUST include responsive testing subtask
 
 Deferred TODOs:
   None — all placeholders resolved.
@@ -149,6 +142,29 @@ Implement only what is required for the current feature. Prefer the simplest wor
 **Rationale**: GAS projects have a limited execution window and a small team surface. Unnecessary complexity
 increases maintenance cost with no runtime benefit.
 
+### VIII. Responsive UI (Mobile-First)
+
+All user-facing UI (HTML pages served via `doGet`, sidebar panels, or modals) MUST be fully responsive across
+mobile, tablet, and desktop viewports.
+
+- Development MUST follow a **mobile-first** approach: base CSS targets small screens (≤ 480 px) first;
+  larger breakpoints are layered on top using `min-width` media queries.
+- Standard breakpoints MUST be respected:
+  - Mobile: default (no media query) — ≤ 480 px
+  - Tablet: `@media (min-width: 481px)` — up to 1024 px
+  - Desktop: `@media (min-width: 1025px)` — 1025 px and above
+- `<meta name="viewport" content="width=device-width, initial-scale=1">` MUST be present in every HTML page.
+- Layout MUST NOT rely on fixed pixel widths for page-level containers; use relative units (`%`, `rem`, `vw`)
+  or CSS Grid / Flexbox.
+- Tap targets MUST be at least 44 × 44 px on mobile (WCAG 2.5.5 guideline).
+- Horizontal scrollbars on any supported device width are prohibited.
+- UI PRs MUST include a manual verification note confirming the page was tested (or visually inspected) at
+  mobile (≤ 480 px), tablet (768 px), and desktop (1280 px) widths.
+
+**Rationale**: The project's target users access Google Sheets add-on dialogs and hosted pages from a variety
+of devices including mobile phones. A mobile-first approach ensures a baseline usable experience on the most
+constrained viewport before progressively enhancing for larger screens.
+
 ## Technology Stack & Constraints
 
 | Concern           | Choice                                                         |
@@ -219,4 +235,4 @@ It supersedes any informal conventions or prior verbal agreements.
 **Compliance review**: Every PR that touches `src/` MUST include a brief verification that its changes do not
 violate any principle in this constitution. Reviewers are expected to flag violations before approval.
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-15 | **Last Amended**: 2026-04-15
+**Version**: 1.1.0 | **Ratified**: 2026-04-15 | **Last Amended**: 2026-04-16
