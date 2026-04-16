@@ -2,7 +2,7 @@
  * Product & Variant CRUD operations.
  */
 
-import { SHEET_NAMES, getAllRows, appendRow, findRowNumberById, generateId } from "./sheets";
+import { SHEET_NAMES, getAllRows, appendRow, findRowNumberById, generateId, updateRow } from "./sheets";
 import { validateSession } from "./auth";
 
 interface Variant {
@@ -168,4 +168,32 @@ function createVariant(
   return { success: true, id };
 }
 
-export { getProducts, searchProducts, createProduct, createVariant };
+function renameProduct(token: string, productId: string, newName: string): MutationResult {
+  const err = authGuard(token);
+  if (err) return { success: false, error: err };
+
+  const trimmed = newName.trim();
+  if (!trimmed) return { success: false, error: "Tên sản phẩm không được để trống." };
+
+  const rowNum = findRowNumberById(SHEET_NAMES.PRODUCTS, productId);
+  if (rowNum === -1) return { success: false, error: "Sản phẩm không tồn tại." };
+
+  // Check duplicate (case-insensitive), excluding the current product
+  const existing = getAllRows(SHEET_NAMES.PRODUCTS);
+  if (existing.some((r) => r[0] !== productId && r[1].toLowerCase() === trimmed.toLowerCase())) {
+    return { success: false, error: "Sản phẩm đã tồn tại." };
+  }
+
+  // Get current row data to preserve other columns
+  const sheet = SpreadsheetApp.openById(
+    PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")!,
+  ).getSheetByName(SHEET_NAMES.PRODUCTS)!;
+  const rowData = sheet.getRange(rowNum, 1, 1, 3).getValues()[0];
+  const oldName = String(rowData[1]);
+
+  updateRow(SHEET_NAMES.PRODUCTS, rowNum, [rowData[0], trimmed, rowData[2]]);
+  console.log(`renameProduct: id=${productId} oldName="${oldName}" newName="${trimmed}"`);
+  return { success: true };
+}
+
+export { getProducts, searchProducts, createProduct, createVariant, renameProduct };

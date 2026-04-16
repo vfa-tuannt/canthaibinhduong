@@ -9,3 +9,4 @@ Thumbs.db
 .vscode
 google-sheet-mcp-credentials.json
 docs
+frontend/dist/

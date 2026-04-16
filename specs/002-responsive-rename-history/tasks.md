@@ -24,13 +24,13 @@
 
 **Purpose**: Initialize the React + Vite + ShadCN UI project in `frontend/` and prepare the development environment
 
-- [ ] T001 Remove old vanilla frontend files (`frontend/app.js`, `frontend/style.css`, `frontend/index.html`) and scaffold Vite + React + TypeScript project in `frontend/` with `npm create vite@latest . -- --template react-ts`
-- [ ] T002 Initialize ShadCN UI in `frontend/` — run `npx shadcn@latest init`, configure `components.json` with New York style and Tailwind CSS
-- [ ] T003 Configure custom Tailwind breakpoints in `frontend/tailwind.config.ts` per Constitution §VIII (mobile ≤480px default, tablet `min-width: 481px`, desktop `min-width: 1025px`)
-- [ ] T004 [P] Install ShadCN UI components via CLI: `npx shadcn@latest add button input label card dialog table select badge sheet skeleton textarea sonner`
-- [ ] T005 [P] Create API helper module in `frontend/src/lib/api.ts` — fetch wrapper for GAS `doPost` endpoint with typed request/response interfaces per `contracts/gas-client-server.md`
-- [ ] T006 [P] Create auth state hook in `frontend/src/hooks/use-auth.ts` — manages `sessionToken` in localStorage, provides `login()`, `logout()`, `isAuthenticated` state
-- [ ] T007 Update GitHub Actions workflow in `.github/workflows/deploy-pages.yml` to run `cd frontend && npm ci && npm run build` and deploy `frontend/dist/` instead of raw `frontend/`
+- [x] T001 Remove old vanilla frontend files (`frontend/app.js`, `frontend/style.css`, `frontend/index.html`) and scaffold Vite + React + TypeScript project in `frontend/` with `npm create vite@latest . -- --template react-ts`
+- [x] T002 Initialize ShadCN UI in `frontend/` — run `npx shadcn@latest init`, configure `components.json` with New York style and Tailwind CSS
+- [x] T003 Configure custom Tailwind breakpoints in `frontend/tailwind.config.ts` per Constitution §VIII (mobile ≤480px default, tablet `min-width: 481px`, desktop `min-width: 1025px`)
+- [x] T004 [P] Install ShadCN UI components via CLI: `npx shadcn@latest add button input label card dialog table select badge sheet skeleton textarea sonner`
+- [x] T005 [P] Create API helper module in `frontend/src/lib/api.ts` — fetch wrapper for GAS `doPost` endpoint with typed request/response interfaces per `contracts/gas-client-server.md`
+- [x] T006 [P] Create auth state hook in `frontend/src/hooks/use-auth.ts` — manages `sessionToken` in localStorage, provides `login()`, `logout()`, `isAuthenticated` state
+- [x] T007 Update GitHub Actions workflow in `.github/workflows/deploy-pages.yml` to run `cd frontend && npm ci && npm run build` and deploy `frontend/dist/` instead of raw `frontend/`
 
 **Checkpoint**: React + ShadCN project builds successfully, `npm run dev` shows blank page, API helper is ready
 
@@ -42,16 +42,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T008 Create root App component with view-based routing in `frontend/src/App.tsx` — manages current view state (login, products, history, dashboard), renders navbar + active page
-- [ ] T009 Create responsive navbar component in `frontend/src/components/navbar.tsx` — desktop: horizontal nav links (Sản phẩm, Lịch sử, Dashboard, Đăng xuất); mobile: hamburger icon opening ShadCN `Sheet` drawer with nav items; all touch targets ≥44×44px
-- [ ] T010 Create login page in `frontend/src/pages/login.tsx` — ShadCN `Card` + `Input` + `Button` + `Label`, calls `login()` API, stores token via `use-auth` hook, responsive layout (centered card, max-width on mobile)
-- [ ] T011 Create products page shell in `frontend/src/pages/products.tsx` — loads product list via `getProducts` API, renders `product-table` component, includes search input and "Thêm sản phẩm" button
-- [ ] T012 Create product table component in `frontend/src/components/product-table.tsx` — ShadCN `Table` displaying products with variants, action buttons (Điều chỉnh, Lịch sử, + Mẫu mã), responsive: `overflow-x-auto` wrapper on mobile, touch-friendly button sizing
-- [ ] T013 Create stock adjustment dialog in `frontend/src/components/adjust-dialog.tsx` — ShadCN `Dialog` with `Select` (Nhập/Xuất), `Input` (quantity), `Textarea` (note), calls `adjustStock` API, shows success/error via `Sonner` toast
-- [ ] T014 Create add variant dialog in `frontend/src/components/variant-dialog.tsx` — ShadCN `Dialog` with `Input` fields (name, code, initial stock), calls `createVariant` API
-- [ ] T015 Create add product dialog using ShadCN `Dialog` in `frontend/src/pages/products.tsx` — `Input` for product name, calls `createProduct` API
-- [ ] T016 Create dashboard page in `frontend/src/pages/dashboard.tsx` — port existing dashboard rendering from vanilla JS to React with ShadCN `Table` + `Select` (year, product filter), responsive layout
-- [ ] T017 Create per-variant history view — when clicking "Lịch sử" on a variant row, show ShadCN `Dialog` or navigate to inline view with `getAdjustmentHistory` API call, date filter inputs, ShadCN `Table` rendering
+- [x] T008 Create root App component with view-based routing in `frontend/src/App.tsx` — manages current view state (login, products, history, dashboard), renders navbar + active page
+- [x] T009 Create responsive navbar component in `frontend/src/components/navbar.tsx` — desktop: horizontal nav links (Sản phẩm, Lịch sử, Dashboard, Đăng xuất); mobile: hamburger icon opening ShadCN `Sheet` drawer with nav items; all touch targets ≥44×44px
+- [x] T010 Create login page in `frontend/src/pages/login.tsx` — ShadCN `Card` + `Input` + `Button` + `Label`, calls `login()` API, stores token via `use-auth` hook, responsive layout (centered card, max-width on mobile)
+- [x] T011 Create products page shell in `frontend/src/pages/products.tsx` — loads product list via `getProducts` API, renders `product-table` component, includes search input and "Thêm sản phẩm" button
+- [x] T012 Create product table component in `frontend/src/components/product-table.tsx` — ShadCN `Table` displaying products with variants, action buttons (Điều chỉnh, Lịch sử, + Mẫu mã), responsive: `overflow-x-auto` wrapper on mobile, touch-friendly button sizing
+- [x] T013 Create stock adjustment dialog in `frontend/src/components/adjust-dialog.tsx` — ShadCN `Dialog` with `Select` (Nhập/Xuất), `Input` (quantity), `Textarea` (note), calls `adjustStock` API, shows success/error via `Sonner` toast
+- [x] T014 Create add variant dialog in `frontend/src/components/variant-dialog.tsx` — ShadCN `Dialog` with `Input` fields (name, code, initial stock), calls `createVariant` API
+- [x] T015 Create add product dialog using ShadCN `Dialog` in `frontend/src/pages/products.tsx` — `Input` for product name, calls `createProduct` API
+- [x] T016 Create dashboard page in `frontend/src/pages/dashboard.tsx` — port existing dashboard rendering from vanilla JS to React with ShadCN `Table` + `Select` (year, product filter), responsive layout
+- [x] T017 Create per-variant history view — when clicking "Lịch sử" on a variant row, show ShadCN `Dialog` or navigate to inline view with `getAdjustmentHistory` API call, date filter inputs, ShadCN `Table` rendering
 
 **Checkpoint**: Foundation ready — full app shell works with login, product list, stock adjustment, variant CRUD, dashboard, per-variant history. All pages responsive at 3 viewports. User story implementation can begin.
 
@@ -65,12 +65,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T018 [US1] Audit and fix login page for mobile in `frontend/src/pages/login.tsx` — ensure card fits within viewport, inputs are full-width, button is ≥44px height, no horizontal overflow
-- [ ] T019 [US1] Audit and fix navbar for mobile in `frontend/src/components/navbar.tsx` — verify hamburger menu triggers Sheet drawer, nav items are stacked vertically with ≥44px tap targets, drawer closes on navigation
-- [ ] T020 [US1] Audit and fix product table for mobile in `frontend/src/components/product-table.tsx` — verify `overflow-x-auto` container wraps table, action buttons stack vertically or use icon-only compact layout on mobile, touch targets ≥44px
-- [ ] T021 [US1] Audit and fix all dialogs for mobile (adjust-dialog, variant-dialog, product add dialog) — verify `DialogContent` uses `max-w-[95vw]` on mobile, form fields are full-width, submit buttons are ≥44px
-- [ ] T022 [US1] Audit and fix dashboard page for mobile in `frontend/src/pages/dashboard.tsx` — verify tables have `overflow-x-auto`, filter controls stack vertically, select dropdowns are full-width
-- [ ] T023 [US1] Verify responsive layout at mobile (≤480px) — Constitution §VIII: no horizontal page scroll, all touch targets ≥44×44px, viewport meta tag present in `frontend/index.html`
+- [x] T018 [US1] Audit and fix login page for mobile in `frontend/src/pages/login.tsx` — ensure card fits within viewport, inputs are full-width, button is ≥44px height, no horizontal overflow
+- [x] T019 [US1] Audit and fix navbar for mobile in `frontend/src/components/navbar.tsx` — verify hamburger menu triggers Sheet drawer, nav items are stacked vertically with ≥44px tap targets, drawer closes on navigation
+- [x] T020 [US1] Audit and fix product table for mobile in `frontend/src/components/product-table.tsx` — verify `overflow-x-auto` container wraps table, action buttons stack vertically or use icon-only compact layout on mobile, touch targets ≥44px
+- [x] T021 [US1] Audit and fix all dialogs for mobile (adjust-dialog, variant-dialog, product add dialog) — verify `DialogContent` uses `max-w-[95vw]` on mobile, form fields are full-width, submit buttons are ≥44px
+- [x] T022 [US1] Audit and fix dashboard page for mobile in `frontend/src/pages/dashboard.tsx` — verify tables have `overflow-x-auto`, filter controls stack vertically, select dropdowns are full-width
+- [x] T023 [US1] Verify responsive layout at mobile (≤480px) — Constitution §VIII: no horizontal page scroll, all touch targets ≥44×44px, viewport meta tag present in `frontend/index.html`
 
 **Checkpoint**: All pages and modals are fully usable on mobile (≤480px). No horizontal scrollbars at page level.
 
@@ -84,11 +84,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T024 [US2] Optimize navbar for tablet in `frontend/src/components/navbar.tsx` — show full horizontal nav links at `md:` breakpoint (≥768px) instead of hamburger menu
-- [ ] T025 [US2] Optimize product table for tablet in `frontend/src/components/product-table.tsx` — show all columns (name, variant, code, stock, actions) without horizontal scroll at `md:` breakpoint, action buttons in horizontal row
-- [ ] T026 [US2] Optimize dialogs for tablet — `DialogContent` at `sm:max-w-[425px]` width, form inputs on wider layout where appropriate
-- [ ] T027 [US2] Optimize dashboard tables for tablet in `frontend/src/pages/dashboard.tsx` — tables show all columns without scroll, filter controls in horizontal row at `md:` breakpoint
-- [ ] T028 [US2] Verify responsive layout at tablet (768px) and desktop (1280px) — Constitution §VIII: tables show all main columns, nav is horizontal, optimal spacing
+- [x] T024 [US2] Optimize navbar for tablet in `frontend/src/components/navbar.tsx` — show full horizontal nav links at `md:` breakpoint (≥768px) instead of hamburger menu
+- [x] T025 [US2] Optimize product table for tablet in `frontend/src/components/product-table.tsx` — show all columns (name, variant, code, stock, actions) without horizontal scroll at `md:` breakpoint, action buttons in horizontal row
+- [x] T026 [US2] Optimize dialogs for tablet — `DialogContent` at `sm:max-w-[425px]` width, form inputs on wider layout where appropriate
+- [x] T027 [US2] Optimize dashboard tables for tablet in `frontend/src/pages/dashboard.tsx` — tables show all columns without scroll, filter controls in horizontal row at `md:` breakpoint
+- [x] T028 [US2] Verify responsive layout at tablet (768px) and desktop (1280px) — Constitution §VIII: tables show all main columns, nav is horizontal, optimal spacing
 
 **Checkpoint**: Tablet users see optimized layout that uses extra screen space. Desktop remains unchanged.
 
@@ -102,12 +102,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T029 [P] [US3] Implement `renameProduct()` function in `src/products.ts` — accepts `(token, productId, newName)`, validates session, checks non-empty trimmed name, checks case-insensitive duplicate, finds product row by ID, updates column B (name), logs operation per contracts/gas-client-server.md
-- [ ] T030 [P] [US3] Export `renameProduct` from `src/products.ts` and add `"renameProduct"` case to `doPost()` switch in `src/index.ts` — maps `params.token`, `params.productId`, `params.newName`
-- [ ] T031 [US3] Add `renameProduct` API call to `frontend/src/lib/api.ts` — typed function `renameProduct(token, productId, newName): Promise<MutationResult>`
-- [ ] T032 [US3] Create rename dialog component in `frontend/src/components/rename-dialog.tsx` — ShadCN `Dialog` with `Input` pre-filled with current product name, submit button calls `renameProduct` API, shows success toast or error message, refreshes product list on success
-- [ ] T033 [US3] Add rename button/icon to product row in `frontend/src/components/product-table.tsx` — adds a rename action button (pencil icon) on each product row, opens `rename-dialog` with product ID and current name
-- [ ] T034 [US3] Verify rename dialog responsive at mobile (≤480px), tablet (768px), desktop (1280px) — Constitution §VIII
+- [x] T029 [P] [US3] Implement `renameProduct()` function in `src/products.ts` — accepts `(token, productId, newName)`, validates session, checks non-empty trimmed name, checks case-insensitive duplicate, finds product row by ID, updates column B (name), logs operation per contracts/gas-client-server.md
+- [x] T030 [P] [US3] Export `renameProduct` from `src/products.ts` and add `"renameProduct"` case to `doPost()` switch in `src/index.ts` — maps `params.token`, `params.productId`, `params.newName`
+- [x] T031 [US3] Add `renameProduct` API call to `frontend/src/lib/api.ts` — typed function `renameProduct(token, productId, newName): Promise<MutationResult>`
+- [x] T032 [US3] Create rename dialog component in `frontend/src/components/rename-dialog.tsx` — ShadCN `Dialog` with `Input` pre-filled with current product name, submit button calls `renameProduct` API, shows success toast or error message, refreshes product list on success
+- [x] T033 [US3] Add rename button/icon to product row in `frontend/src/components/product-table.tsx` — adds a rename action button (pencil icon) on each product row, opens `rename-dialog` with product ID and current name
+- [x] T034 [US3] Verify rename dialog responsive at mobile (≤480px), tablet (768px), desktop (1280px) — Constitution §VIII
 
 **Checkpoint**: Product rename works end-to-end. Variants and history are unaffected by rename.
 
@@ -121,14 +121,14 @@
 
 ### Implementation for User Story 4
 
-- [ ] T035 [P] [US4] Implement `getAllAdjustmentHistory()` function in `src/inventory.ts` — accepts `(token)`, validates session, reads all AdjustmentHistory rows, enriches each record with `variantName` (from Variants sheet) and `productId`/`productName` (from Products sheet via Variant.productId), sorts by `createdAt` descending, limits to 5000 records, returns `GlobalHistoryResult` per contracts/gas-client-server.md
-- [ ] T036 [P] [US4] Export `getAllAdjustmentHistory` from `src/inventory.ts` and add `"getAllAdjustmentHistory"` case to `doPost()` switch in `src/index.ts` — maps `params.token`
-- [ ] T037 [US4] Add `getAllAdjustmentHistory` API call to `frontend/src/lib/api.ts` — typed function returning `Promise<GlobalHistoryResult>` with `EnrichedAdjustmentRecord[]`
-- [ ] T038 [US4] Create global history page in `frontend/src/pages/history.tsx` — calls `getAllAdjustmentHistory` API on mount, stores full data in state, renders filter controls (date range inputs + product `Select` dropdown populated from unique product names in data) and `history-table` component
-- [ ] T039 [US4] Create history table component in `frontend/src/components/history-table.tsx` — ShadCN `Table` displaying enriched history records (product name, variant name, type badge Nhập/Xuất, quantity, stock before, stock after, note, timestamp), responsive: `overflow-x-auto` on mobile, key columns always visible
-- [ ] T040 [US4] Implement client-side filtering in `frontend/src/pages/history.tsx` — filter `data[]` by date range (`createdAt.substring(0,10)` vs `fromDate`/`toDate`) AND by product (`productId` vs selected product dropdown), show empty state message "Không có dữ liệu phù hợp" when no results match
-- [ ] T041 [US4] Add "Lịch sử" navigation link to navbar in `frontend/src/components/navbar.tsx` — adds navigation item between "Sản phẩm" and "Dashboard", navigates to global history page
-- [ ] T042 [US4] Verify global history page responsive at mobile (≤480px), tablet (768px), desktop (1280px) — Constitution §VIII: filter controls stack on mobile, table scrollable horizontally on mobile, all columns visible on tablet+
+- [x] T035 [P] [US4] Implement `getAllAdjustmentHistory()` function in `src/inventory.ts` — accepts `(token)`, validates session, reads all AdjustmentHistory rows, enriches each record with `variantName` (from Variants sheet) and `productId`/`productName` (from Products sheet via Variant.productId), sorts by `createdAt` descending, limits to 5000 records, returns `GlobalHistoryResult` per contracts/gas-client-server.md
+- [x] T036 [P] [US4] Export `getAllAdjustmentHistory` from `src/inventory.ts` and add `"getAllAdjustmentHistory"` case to `doPost()` switch in `src/index.ts` — maps `params.token`
+- [x] T037 [US4] Add `getAllAdjustmentHistory` API call to `frontend/src/lib/api.ts` — typed function returning `Promise<GlobalHistoryResult>` with `EnrichedAdjustmentRecord[]`
+- [x] T038 [US4] Create global history page in `frontend/src/pages/history.tsx` — calls `getAllAdjustmentHistory` API on mount, stores full data in state, renders filter controls (date range inputs + product `Select` dropdown populated from unique product names in data) and `history-table` component
+- [x] T039 [US4] Create history table component in `frontend/src/components/history-table.tsx` — ShadCN `Table` displaying enriched history records (product name, variant name, type badge Nhập/Xuất, quantity, stock before, stock after, note, timestamp), responsive: `overflow-x-auto` on mobile, key columns always visible
+- [x] T040 [US4] Implement client-side filtering in `frontend/src/pages/history.tsx` — filter `data[]` by date range (`createdAt.substring(0,10)` vs `fromDate`/`toDate`) AND by product (`productId` vs selected product dropdown), show empty state message "Không có dữ liệu phù hợp" when no results match
+- [x] T041 [US4] Add "Lịch sử" navigation link to navbar in `frontend/src/components/navbar.tsx` — adds navigation item between "Sản phẩm" and "Dashboard", navigates to global history page
+- [x] T042 [US4] Verify global history page responsive at mobile (≤480px), tablet (768px), desktop (1280px) — Constitution §VIII: filter controls stack on mobile, table scrollable horizontally on mobile, all columns visible on tablet+
 
 **Checkpoint**: Global history page works end-to-end. Users can see all adjustments and filter by date and product.
 
@@ -138,10 +138,10 @@
 
 **Purpose**: Final improvements affecting multiple user stories
 
-- [ ] T043 [P] Verify `npm run build` (backend) and `cd frontend && npm run build` (frontend) both exit 0
-- [ ] T044 [P] Verify `npm run lint` (backend) exits 0 with new code in `src/products.ts` and `src/index.ts`
-- [ ] T045 Run quickstart.md validation — test both new API actions (`renameProduct`, `getAllAdjustmentHistory`) manually via curl or browser
-- [ ] T046 Final responsive audit across ALL pages at all 3 viewports (mobile ≤480px, tablet 768px, desktop 1280px) — document verification per Constitution §VIII
+- [x] T043 [P] Verify `npm run build` (backend) and `cd frontend && npm run build` (frontend) both exit 0
+- [x] T044 [P] Verify `npm run lint` (backend) exits 0 with new code in `src/products.ts` and `src/index.ts`
+- [x] T045 Run quickstart.md validation — test both new API actions (`renameProduct`, `getAllAdjustmentHistory`) manually via curl or browser
+- [x] T046 Final responsive audit across ALL pages at all 3 viewports (mobile ≤480px, tablet 768px, desktop 1280px) — document verification per Constitution §VIII
 
 ---
 

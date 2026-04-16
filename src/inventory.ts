@@ -30,6 +30,26 @@ interface HistoryResult {
   error?: string;
 }
 
+interface EnrichedAdjustmentRecord {
+  id: string;
+  variantId: string;
+  variantName: string;
+  productId: string;
+  productName: string;
+  adjustmentType: string;
+  quantity: number;
+  stockBefore: number;
+  stockAfter: number;
+  note: string;
+  createdAt: string;
+}
+
+interface GlobalHistoryResult {
+  success: boolean;
+  data?: EnrichedAdjustmentRecord[];
+  error?: string;
+}
+
 function adjustStock(
   token: string,
   variantId: string,
@@ -132,4 +152,47 @@ function getAdjustmentHistory(token: string, variantId: string): HistoryResult {
   return { success: true, data: filtered };
 }
 
-export { adjustStock, getAdjustmentHistory };
+function getAllAdjustmentHistory(token: string): GlobalHistoryResult {
+  if (!validateSession(token)) {
+    return { success: false, error: "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại." };
+  }
+
+  // Build lookup maps for variants and products
+  const variantRows = getAllRows(SHEET_NAMES.VARIANTS);
+  const variantMap = new Map<string, { variantName: string; productId: string }>();
+  for (const v of variantRows) {
+    variantMap.set(v[0], { variantName: v[2], productId: v[1] });
+  }
+
+  const productRows = getAllRows(SHEET_NAMES.PRODUCTS);
+  const productMap = new Map<string, string>();
+  for (const p of productRows) {
+    productMap.set(p[0], p[1]);
+  }
+
+  const historyRows = getAllRows(SHEET_NAMES.ADJUSTMENT_HISTORY);
+  const enriched: EnrichedAdjustmentRecord[] = historyRows
+    .map((r) => {
+      const variant = variantMap.get(r[1]);
+      return {
+        id: r[0],
+        variantId: r[1],
+        variantName: variant ? variant.variantName : "(Đã xóa)",
+        productId: variant ? variant.productId : "",
+        productName: variant ? (productMap.get(variant.productId) || "(Đã xóa)") : "(Đã xóa)",
+        adjustmentType: r[2],
+        quantity: Number(r[3]),
+        stockBefore: Number(r[4]),
+        stockAfter: Number(r[5]),
+        note: r[6],
+        createdAt: r[7],
+      };
+    })
+    .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+    .slice(0, 5000);
+
+  console.log(`getAllAdjustmentHistory: returned ${enriched.length} records`);
+  return { success: true, data: enriched };
+}
+
+export { adjustStock, getAdjustmentHistory, getAllAdjustmentHistory };

@@ -2,8 +2,8 @@
 // See: https://developers.google.com/apps-script/guides/triggers
 
 import { login, validateSession, logout } from "./auth";
-import { getProducts, searchProducts, createProduct, createVariant } from "./products";
-import { adjustStock, getAdjustmentHistory } from "./inventory";
+import { getProducts, searchProducts, createProduct, createVariant, renameProduct } from "./products";
+import { adjustStock, getAdjustmentHistory, getAllAdjustmentHistory } from "./inventory";
 import { getDashboardData } from "./dashboard";
 
 // --- Web App entry point ---
@@ -59,8 +59,14 @@ function doPost(e: GoogleAppsScript.Events.DoPost): GoogleAppsScript.Content.Tex
       case "getAdjustmentHistory":
         result = getAdjustmentHistory(params.token, params.variantId);
         break;
+      case "renameProduct":
+        result = renameProduct(params.token, params.productId, params.newName);
+        break;
       case "getDashboardData":
         result = getDashboardData(params.token, params.year);
+        break;
+      case "getAllAdjustmentHistory":
+        result = getAllAdjustmentHistory(params.token);
         break;
       default:
         result = { success: false, error: "Unknown action: " + action };
@@ -108,5 +114,6 @@ export {
   createVariant,
   adjustStock,
   getAdjustmentHistory,
+  getAllAdjustmentHistory,
   getDashboardData,
 };
