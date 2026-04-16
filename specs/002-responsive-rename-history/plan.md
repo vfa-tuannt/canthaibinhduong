@@ -32,7 +32,7 @@ Migrate the `frontend/` directory from vanilla HTML/JS/CSS to a React + Vite + S
 | III | Bundled Deployment (NON-NEGOTIABLE) | ✅ PASS | Backend: same `tsc→webpack→Code.js→clasp push` pipeline. Frontend: separate `vite build→GitHub Pages`. |
 | IV | GAS Runtime Compliance | ✅ PASS | No async/await in backend. React runs only in browser frontend (GitHub Pages), not in GAS. |
 | V | Observability | ✅ PASS | `renameProduct` and `getAllAdjustmentHistory` will log start/completion/errors via `console.log`/`console.error`. |
-| VI | Credential & Secret Safety | ✅ PASS | No new secrets. API_URL is public endpoint, not a secret. |
+| VI | Credential & Secret Safety | ✅ PASS | No new secrets. API_URL is injected via `VITE_API_URL` env var at build time (GitHub Actions uses repository variable, local dev uses `frontend/.env` which is gitignored). |
 | VII | Simplicity (YAGNI) | ✅ PASS | ShadCN components used as-is. No custom abstractions. Client-side filtering (no server-side pagination for now). |
 | VIII | Responsive UI (Mobile-First) | ✅ PASS | ShadCN + Tailwind CSS is inherently mobile-first. Custom breakpoints per §VIII. |
 

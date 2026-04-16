@@ -47,11 +47,15 @@ cd frontend
 # Install dependencies
 npm install
 
+# Configure API URL (one-time, already gitignored)
+# Copy the GAS deployment URL into .env
+echo 'VITE_API_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec' > .env
+
 # Start dev server
 npm run dev
 ```
 
-The dev server runs at `http://localhost:5173`. Update `API_URL` in `src/lib/api.ts` if needed.
+The dev server runs at `http://localhost:5173`. The `VITE_API_URL` is read from `frontend/.env` at build time via Vite's `import.meta.env`.
 
 ### Key ShadCN Components Used
 
@@ -97,7 +101,12 @@ npm run deploy  # Versioned deployment
 
 ### Frontend
 
-Push to `main` branch → GitHub Actions deploys `frontend/dist/` to GitHub Pages automatically.
+Push to `main` or `002-responsive-rename-history` branch → GitHub Actions deploys `frontend/dist/` to GitHub Pages automatically.
+
+The `VITE_API_URL` is injected at build time from a GitHub repository variable. To configure:
+1. Go to GitHub repo → Settings → Secrets and variables → Actions → Variables
+2. Add variable `VITE_API_URL` with the GAS deployment URL
+3. Push to trigger deploy
 
 ```bash
 git push origin main
