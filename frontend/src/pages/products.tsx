@@ -139,7 +139,7 @@ export function ProductsPage({ token }: ProductsPageProps) {
         </div>
       </div>
 
-      {loading ? (
+      {loading && products.length === 0 ? (
         <div className="space-y-2">
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
@@ -150,7 +150,8 @@ export function ProductsPage({ token }: ProductsPageProps) {
           Chưa có sản phẩm nào. Nhấn "+ Sản phẩm" để thêm.
         </p>
       ) : (
-        <ProductTable
+        <div className={loading ? "opacity-50 pointer-events-none transition-opacity" : "transition-opacity"}>
+          <ProductTable
           products={products}
           onAdjust={setAdjustVariant}
           onHistory={setHistoryVariant}
@@ -165,6 +166,7 @@ export function ProductsPage({ token }: ProductsPageProps) {
           token={token}
           onRefresh={loadProducts}
         />
+        </div>
       )}
 
       <AdjustDialog
